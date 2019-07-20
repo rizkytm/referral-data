@@ -69,4 +69,42 @@ class Admin extends CI_Controller
             redirect('admin');
         }
     }
+
+    public function update()
+    {
+        $this->load->model("UserModel");
+
+        $id = $this->input->post('id-edit');
+        $name = $this->input->post('name-edit');
+        $update = $this->UserModel->update($id, $name);
+        if ($update) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            User successfully updated
+          </div>');
+            redirect('admin');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            Failed to update user
+          </div>');
+            redirect('admin');
+        }
+    }
+
+    public function delete()
+    {
+        $this->load->model("UserModel");
+        $id = $this->input->post('id-delete');
+        $delete = $this->UserModel->delete($id);
+        if ($delete) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            User successfully removed
+          </div>');
+            redirect('admin');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            Failed to delete user
+          </div>');
+            redirect('admin');
+        }
+    }
 }

@@ -108,6 +108,7 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Date Created</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -115,18 +116,76 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Date Created</th>
+                      <th>Action</th>
                     </tr>
                   </tfoot>
                   <tbody>
-                    <?php foreach ($users as $row) {
-
+                    <?php $no = 1;
+                    foreach ($users as $row) {
                       ?>
                       <tr>
                         <td><?= $row->name ?></td>
                         <td><?= $row->email ?></td>
                         <td><?= $row->date_created ?></td>
+                        <td style="text-align:center">
+                          <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserModal<?= $row->id; ?>" data-whatever="<?= $row->name ?>"><i class="fa fa-edit fa-lg"></i></button>
+
+                          <div class="modal fade" id="editUserModal<?= $row->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form class="user" method="post" action="<?= base_url('admin/update'); ?>">
+                                    <div class="form-group">
+                                      <label for="name" class="col-form-label">Name:</label>
+                                      <input type="text" hidden class="form-control" id="id-edit" name="id-edit" value="<?= $row->id ?>">
+                                      <input type="text" class="form-control" id="name-edit" name="name-edit" value="<?= $row->name ?>">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                  <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+                          <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal<?= $row->id; ?>"><i class="fa fa-trash-alt fa-lg"></i></button>
+
+                          <div class="modal fade" id="deleteModal<?= $row->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Delete user</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <form class="user" method="post" action="<?= base_url('admin/delete'); ?>">
+                                  <div class="modal-body">
+                                    Are you sure want to delete user with name <b><?= $row->name ?></b>?
+                                    <input type="text" hidden class="form-control" id="id-delete" name="id-delete" value="<?= $row->id ?>">
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+
+                        </td>
                       </tr>
-                    <?php } ?>
+                      <?php $no++;
+                    } ?>
                   </tbody>
                 </table>
               </div>
