@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Auth extends CI_Controller
 {
     public function __construct()
@@ -74,7 +73,7 @@ class Auth extends CI_Controller
                 'email' => htmlspecialchars($this->input->post('email', true)),
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'role_id' => 2,
-                'date_created' => time()
+                'date_created' => date('Y-m-d H:i:s')
             ];
 
             $this->db->insert('user', $data);
