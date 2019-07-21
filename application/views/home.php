@@ -22,14 +22,14 @@
 
       <!-- Nav Item - Tables -->
       <li class="nav-item active">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="<?= base_url('admin'); ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Users</span></a>
       </li>
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="<?= base_url('admin/referral'); ?>">
           <i class="fas fa-fw fa-user-friends"></i>
           <span>Referrals</span></a>
       </li>
@@ -232,7 +232,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="<?= base_url('auth/logout'); ?>">Logout</a>
         </div>
       </div>
     </div>

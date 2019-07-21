@@ -26,12 +26,16 @@ class Admin extends CI_Controller
 
     public function referral()
     {
+        $data['title'] = 'Admin Home';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
         $this->load->model("ReferralModel");
-        $data = array(
-            "referrals" => $this->ReferralModel->get()
-        );
+
+        $data['users'] =  $this->ReferralModel->get();
+
         $this->load->view('templates/home_header', $data);
-        $this->load->view('referral');
+        $this->load->view('referral', $data);
         $this->load->view('templates/home_footer');
     }
 
@@ -105,6 +109,80 @@ class Admin extends CI_Controller
             Failed to delete user
           </div>');
             redirect('admin');
+        }
+    }
+
+    public function addreferraldata()
+    {
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+            'is_unique' => "This email has already registered!"
+        ]);
+        $this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|numeric');
+        if ($this->form_validation->run() == false) {
+
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            Failed to add new referral data
+          </div>');
+
+            redirect('admin/referral');
+        } else {
+            $current_user['user'] = $this->db->get_where('user', ['email' =>
+            $this->session->userdata('email')])->row_array();
+
+            $data = [
+                'name' => htmlspecialchars($this->input->post('name', true)),
+                'no_hp' => htmlspecialchars($this->input->post('no_hp', true)),
+                'email' => htmlspecialchars($this->input->post('email', true)),
+                'referral_id' => $current_user['user']['id'],
+                'date_created' => date('Y-m-d H:i:s')
+            ];
+
+            $this->db->insert('referral_data', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            New referral data successfully created
+          </div>');
+            redirect('admin/referral');
+        }
+    }
+
+    public function updatereferraldata()
+    {
+        $this->load->model("ReferralModel");
+
+        $id = $this->input->post('id-edit');
+        $name = $this->input->post('name-edit');
+        $no_hp = $this->input->post('no_hp-edit');
+        $email = $this->input->post('email-edit');
+        $update = $this->ReferralModel->update($id, $name, $no_hp, $email);
+        if ($update) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Referral data successfully updated
+          </div>');
+            redirect('admin/referral');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            Failed to update referral data
+          </div>');
+            redirect('admin/referral');
+        }
+    }
+
+    public function deletereferraldata()
+    {
+        $this->load->model("ReferralModel");
+        $id = $this->input->post('id-delete');
+        $delete = $this->ReferralModel->delete($id);
+        if ($delete) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+            Referral data successfully removed
+          </div>');
+            redirect('admin/referral');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            Failed to delete referral data
+          </div>');
+            redirect('admin/referral');
         }
     }
 }
