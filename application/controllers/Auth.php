@@ -35,23 +35,23 @@ class Auth extends CI_Controller
                     'email' => $user['email'],
                     'role_id' => $user['role_id']
                 ];
+                // Jika role_id == 1, maka masuk ke halaman admin
                 if ($user['role_id'] == 1) {
                     $this->session->set_userdata($data);
                     redirect('admin');
+                    // Jika role_id == 2, maka masuk ke halaman user
                 } else {
                     $this->session->set_userdata($data);
                     redirect('user');
                 }
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Wrong Password
-          </div>');
+                Wrong Password</div>');
                 redirect('auth');
             }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Email is not registered
-          </div>');
+            Email is not registered</div>');
             redirect('auth');
         }
     }
@@ -84,8 +84,7 @@ class Auth extends CI_Controller
 
             $this->db->insert('user', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            Congratulations! your account created. Please Login
-          </div>');
+            Congratulations! your account created. Please Login</div>');
             redirect('auth');
         }
     }
@@ -96,8 +95,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('role_id');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            You have been logged out
-          </div>');
+        You have been logged out</div>');
         redirect('auth');
     }
 }

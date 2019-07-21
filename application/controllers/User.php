@@ -7,6 +7,8 @@ class User extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->model("UserModel");
+        $this->load->model("ReferralModel");
     }
 
     public function index()
@@ -15,12 +17,10 @@ class User extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
-        $this->load->model("UserModel");
-
         $data['users'] = $this->UserModel->get_referral($data['user']['id']);
 
         $this->load->view('templates/home_header', $data);
-        $this->load->view('user_referral', $data);
+        $this->load->view('user/user_referral', $data);
         $this->load->view('templates/home_footer');
     }
 
@@ -32,11 +32,8 @@ class User extends CI_Controller
         ]);
         $this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|numeric');
         if ($this->form_validation->run() == false) {
-
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to add new referral data
-          </div>');
-
+            Failed to add new referral data</div>');
             redirect('user');
         } else {
             $current_user['user'] = $this->db->get_where('user', ['email' =>
@@ -52,48 +49,42 @@ class User extends CI_Controller
 
             $this->db->insert('referral_data', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            New referral data successfully created
-          </div>');
+            New referral data successfully created</div>');
             redirect('user');
         }
     }
 
     public function updatereferraldata()
     {
-        $this->load->model("ReferralModel");
-
         $id = $this->input->post('id-edit');
         $name = $this->input->post('name-edit');
         $no_hp = $this->input->post('no_hp-edit');
         $email = $this->input->post('email-edit');
+
         $update = $this->ReferralModel->update($id, $name, $no_hp, $email);
+
         if ($update) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            Referral data successfully updated
-          </div>');
+            Referral data successfully updated</div>');
             redirect('user');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to update referral data
-          </div>');
+            Failed to update referral data</div>');
             redirect('user');
         }
     }
 
     public function deletereferraldata()
     {
-        $this->load->model("ReferralModel");
         $id = $this->input->post('id-delete');
         $delete = $this->ReferralModel->delete($id);
         if ($delete) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            Referral data successfully removed
-          </div>');
+            Referral data successfully removed</div>');
             redirect('user');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to delete referral data
-          </div>');
+            Failed to delete referral data</div>');
             redirect('user');
         }
     }

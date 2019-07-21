@@ -7,26 +7,34 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+
+        // Memuat model UserModel dan ReferralModel
+        $this->load->model("UserModel");
+        $this->load->model("ReferralModel");
     }
 
     public function index()
     {
+        // Cek apakah akun yang login adalah akun Admin
         if ($this->session->userdata('role_id') === '1') {
+            // Memberi title page
             $data['title'] = 'Admin Home';
+
+            // Mengambil data user yang login
             $data['user'] = $this->db->get_where('user', ['email' =>
             $this->session->userdata('email')])->row_array();
 
-            $this->load->model("UserModel");
+            // Query semua data dari tabel user
+            $data['users'] = $this->UserModel->get();
 
-            $data['users'] =  $this->UserModel->get();
-
+            // Memuat tampilan halaman
             $this->load->view('templates/home_header', $data);
-            $this->load->view('home', $data);
+            $this->load->view('admin/home', $data);
             $this->load->view('templates/home_footer');
         } else {
             $data['title'] = 'Unauthorized';
             $this->load->view('templates/home_header', $data);
-            $this->load->view('401');
+            $this->load->view('errors/401');
             $this->load->view('templates/home_footer');
         }
     }
@@ -35,28 +43,28 @@ class Admin extends CI_Controller
     {
         if ($this->session->userdata('role_id') === '1') {
             $data['title'] = 'Admin Home';
+
             $data['user'] = $this->db->get_where('user', ['email' =>
             $this->session->userdata('email')])->row_array();
-
-            $this->load->model("ReferralModel");
-            $this->load->model("UserModel");
 
             $data['referrals'] =  $this->ReferralModel->get();
             $data['users'] =  $this->UserModel->get_all();
 
             $this->load->view('templates/home_header', $data);
-            $this->load->view('referral', $data);
+            $this->load->view('admin/referral', $data);
             $this->load->view('templates/home_footer');
         } else {
             $data['title'] = 'Unauthorized';
             $this->load->view('templates/home_header', $data);
-            $this->load->view('401');
+            $this->load->view('errors/401');
             $this->load->view('templates/home_footer');
         }
     }
 
+    // Menambahkan user baru
     public function adduser()
     {
+        // Validasi aturan form
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
             'is_unique' => "This email has already registered!"
@@ -66,14 +74,15 @@ class Admin extends CI_Controller
             'min_length' => 'Password too short!'
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
+        // Memvalidasi Form
         if ($this->form_validation->run() == false) {
-
+            // Mengirim Alert Gagal
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to add new user
-          </div>');
-
+            Failed to add new user </div>');
+            // Dialihkan ke halaman Users Admin
             redirect('admin');
         } else {
+            // Menampung input pada variabel data
             $data = [
                 'name' => htmlspecialchars($this->input->post('name', true)),
                 'email' => htmlspecialchars($this->input->post('email', true)),
@@ -82,52 +91,56 @@ class Admin extends CI_Controller
                 'date_created' => date('Y-m-d H:i:s')
             ];
 
+            // Memasukkan data ke tabel user
             $this->db->insert('user', $data);
+            // Mengirim Alert Sukses
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            New user successfully created
-          </div>');
+            New user successfully created</div>');
             redirect('admin');
         }
     }
 
+    // Mengedit dan mengupdate data user
     public function update()
     {
-        $this->load->model("UserModel");
-
+        // Mengambil data dari form
         $id = $this->input->post('id-edit');
         $name = $this->input->post('name-edit');
+
+        // Menjalankan update
         $update = $this->UserModel->update($id, $name);
+
         if ($update) {
+            // Alert Sukses
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            User successfully updated
-          </div>');
+            User successfully updated</div>');
             redirect('admin');
         } else {
+            // Alert Gagal
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to update user
-          </div>');
+            Failed to update user</div>');
             redirect('admin');
         }
     }
 
+    // Menghapus user
     public function delete()
     {
-        $this->load->model("UserModel");
         $id = $this->input->post('id-delete');
         $delete = $this->UserModel->delete($id);
+
         if ($delete) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            User successfully removed
-          </div>');
+            User successfully removed</div>');
             redirect('admin');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to delete user
-          </div>');
+            Failed to delete user</div>');
             redirect('admin');
         }
     }
 
+    // Menambahkan data referral baru
     public function addreferraldata()
     {
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
@@ -135,14 +148,13 @@ class Admin extends CI_Controller
             'is_unique' => "This email has already registered!"
         ]);
         $this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|numeric');
+
         if ($this->form_validation->run() == false) {
-
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to add new referral data
-          </div>');
-
+            Failed to add new referral data</div>');
             redirect('admin/referral');
         } else {
+            // Mengambil data user yang sedang login
             $current_user['user'] = $this->db->get_where('user', ['email' =>
             $this->session->userdata('email')])->row_array();
 
@@ -156,48 +168,44 @@ class Admin extends CI_Controller
 
             $this->db->insert('referral_data', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            New referral data successfully created
-          </div>');
+            New referral data successfully created</div>');
             redirect('admin/referral');
         }
     }
 
     public function updatereferraldata()
     {
-        $this->load->model("ReferralModel");
-
         $id = $this->input->post('id-edit');
         $name = $this->input->post('name-edit');
         $no_hp = $this->input->post('no_hp-edit');
         $email = $this->input->post('email-edit');
+
         $update = $this->ReferralModel->update($id, $name, $no_hp, $email);
+
         if ($update) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            Referral data successfully updated
-          </div>');
+            Referral data successfully updated</div>');
             redirect('admin/referral');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to update referral data
-          </div>');
+            Failed to update referral data</div>');
             redirect('admin/referral');
         }
     }
 
     public function deletereferraldata()
     {
-        $this->load->model("ReferralModel");
         $id = $this->input->post('id-delete');
+
         $delete = $this->ReferralModel->delete($id);
+
         if ($delete) {
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-            Referral data successfully removed
-          </div>');
+            Referral data successfully removed</div>');
             redirect('admin/referral');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Failed to delete referral data
-          </div>');
+            Failed to delete referral data</div>');
             redirect('admin/referral');
         }
     }
