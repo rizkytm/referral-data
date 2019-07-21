@@ -74,7 +74,7 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'postgre:host=ec2-174-129-41-127.compute-1.amazonaws.com;port=5432;dbname=hyssizjoeomvix',
+	'dsn'	=> 'pgsql:host=ec2-174-129-41-127.compute-1.amazonaws.com;port=5432;dbname=hyssizjoeomvix',
 	'hostname' => 'ec2-174-129-41-127.compute-1.amazonaws.com',
 	'username' => 'hyssizjoeomvix',
 	'password' => 'f8261ae38c5ff5ed585d1014d836fdc764c5aac592fb3477517d21e680b28119',
