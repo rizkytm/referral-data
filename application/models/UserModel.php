@@ -5,7 +5,7 @@ class UserModel extends CI_Model
     public function get()
     {
         $this->load->database();
-        $query = $this->db->query("select * from user");
+        $query = $this->db->query("select * from user where role_id='2'");
         return $query->result();
     }
 
@@ -27,5 +27,12 @@ class UserModel extends CI_Model
         $this->load->database();
         $this->db->where('id', $id);
         return $this->db->delete('user');
+    }
+
+    public function get_referral($id)
+    {
+        $this->load->database();
+        $query = $this->db->query("SELECT * FROM referral_data WHERE referral_id='$id'");
+        return $query->result();
     }
 }
