@@ -35,4 +35,11 @@ class UserModel extends CI_Model
         $query = $this->db->query("SELECT * FROM referral_data WHERE referral_id='$id'");
         return $query->result();
     }
+
+    public function get_all()
+    {
+        $this->load->database();
+        $query = $this->db->query("SELECT * FROM user");
+        return $query->result();
+    }
 }

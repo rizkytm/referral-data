@@ -5,7 +5,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-sync-alt"></i>
         </div>
@@ -124,13 +124,18 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <?php foreach ($users as $row) {
+                    <?php foreach ($referrals as $row) {
                       ?>
                       <tr>
                         <td><?= $row->name ?></td>
                         <td><?= $row->no_hp ?></td>
                         <td><?= $row->email ?></td>
-                        <td><?= $row->referral_id ?></td>
+                        <td>
+                          <?php foreach ($users as $user) {
+                            if ($user->id == $row->referral_id)
+                              echo $row->referral_id . '. ' . $user->name;
+                          } ?>
+                        </td>
                         <td><?= $row->date_created ?></td>
                         <td style="text-align:center">
                           <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editReferralModal<?= $row->id; ?>"><i class="fa fa-edit fa-lg"></i></button>
@@ -214,7 +219,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Created by Rizky Tria Meditanala 2019</span>
           </div>
         </div>
       </footer>

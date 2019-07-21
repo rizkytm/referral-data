@@ -11,32 +11,48 @@ class Admin extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Admin Home';
-        $data['user'] = $this->db->get_where('user', ['email' =>
-        $this->session->userdata('email')])->row_array();
+        if ($this->session->userdata('role_id') === '1') {
+            $data['title'] = 'Admin Home';
+            $data['user'] = $this->db->get_where('user', ['email' =>
+            $this->session->userdata('email')])->row_array();
 
-        $this->load->model("UserModel");
+            $this->load->model("UserModel");
 
-        $data['users'] =  $this->UserModel->get();
+            $data['users'] =  $this->UserModel->get();
 
-        $this->load->view('templates/home_header', $data);
-        $this->load->view('home', $data);
-        $this->load->view('templates/home_footer');
+            $this->load->view('templates/home_header', $data);
+            $this->load->view('home', $data);
+            $this->load->view('templates/home_footer');
+        } else {
+            $data['title'] = 'Unauthorized';
+            $this->load->view('templates/home_header', $data);
+            $this->load->view('401');
+            $this->load->view('templates/home_footer');
+        }
     }
 
     public function referral()
     {
-        $data['title'] = 'Admin Home';
-        $data['user'] = $this->db->get_where('user', ['email' =>
-        $this->session->userdata('email')])->row_array();
+        if ($this->session->userdata('role_id') === '1') {
+            $data['title'] = 'Admin Home';
+            $data['user'] = $this->db->get_where('user', ['email' =>
+            $this->session->userdata('email')])->row_array();
 
-        $this->load->model("ReferralModel");
+            $this->load->model("ReferralModel");
+            $this->load->model("UserModel");
 
-        $data['users'] =  $this->ReferralModel->get();
+            $data['referrals'] =  $this->ReferralModel->get();
+            $data['users'] =  $this->UserModel->get_all();
 
-        $this->load->view('templates/home_header', $data);
-        $this->load->view('referral', $data);
-        $this->load->view('templates/home_footer');
+            $this->load->view('templates/home_header', $data);
+            $this->load->view('referral', $data);
+            $this->load->view('templates/home_footer');
+        } else {
+            $data['title'] = 'Unauthorized';
+            $this->load->view('templates/home_header', $data);
+            $this->load->view('401');
+            $this->load->view('templates/home_footer');
+        }
     }
 
     public function adduser()
