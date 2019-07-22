@@ -26,7 +26,7 @@ class UserModel extends CI_Model
     {
         $this->load->database();
         $this->db->where('id', $id);
-        return $this->db->delete('user');
+        return $this->db->delete('user_account');
     }
 
     public function get_referral($id)
