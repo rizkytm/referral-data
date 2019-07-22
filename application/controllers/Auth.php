@@ -46,12 +46,18 @@ class Auth extends CI_Controller
                 }
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
-                Wrong Password</div>');
+                Wrong Password
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
                 redirect('auth');
             }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
-            Email is not registered</div>');
+            Email is not registered<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button></div>');
             redirect('auth');
         }
     }
@@ -84,7 +90,10 @@ class Auth extends CI_Controller
 
             $this->db->insert('user_account', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
-            Congratulations! your account created. Please Login</div>');
+            Congratulations! your account created. Please Login
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button></div>');
             redirect('auth');
         }
     }
@@ -95,7 +104,11 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('role_id');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
-        You have been logged out</div>');
+        You have been logged out
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
         redirect('auth');
     }
 }

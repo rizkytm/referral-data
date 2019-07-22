@@ -33,7 +33,11 @@ class User extends CI_Controller
         $this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|numeric');
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
-            Failed to add new referral data</div>');
+            Failed to add new referral data
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('user');
         } else {
             $current_user['user'] = $this->db->get_where('user_account', ['email' =>
@@ -49,7 +53,11 @@ class User extends CI_Controller
 
             $this->db->insert('referral_data', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
-            New referral data successfully created</div>');
+            New referral data successfully created
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('user');
         }
     }
@@ -65,11 +73,19 @@ class User extends CI_Controller
 
         if ($update) {
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
-            Referral data successfully updated</div>');
+            Referral data successfully updated
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('user');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
-            Failed to update referral data</div>');
+            Failed to update referral data
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('user');
         }
     }
@@ -80,11 +96,19 @@ class User extends CI_Controller
         $delete = $this->ReferralModel->delete($id);
         if ($delete) {
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
-            Referral data successfully removed</div>');
+            Referral data successfully removed
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('user');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
-            Failed to delete referral data</div>');
+            Failed to delete referral data
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('user');
         }
     }

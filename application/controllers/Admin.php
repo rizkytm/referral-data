@@ -184,11 +184,19 @@ class Admin extends CI_Controller
 
         if ($update) {
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
-            Referral data successfully updated</div>');
+            Referral data successfully updated
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('admin/referral');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
-            Failed to update referral data</div>');
+            Failed to update referral data
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('admin/referral');
         }
     }
@@ -201,11 +209,19 @@ class Admin extends CI_Controller
 
         if ($delete) {
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
-            Referral data successfully removed</div>');
+            Referral data successfully removed
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('admin/referral');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
-            Failed to delete referral data</div>');
+            Failed to delete referral data
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>');
             redirect('admin/referral');
         }
     }
