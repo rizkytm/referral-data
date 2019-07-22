@@ -5,7 +5,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin'); ?>">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-sync-alt"></i>
         </div>
@@ -251,12 +251,12 @@
           <form class="user" method="post" action="<?= base_url('admin/adduser'); ?>">
             <div class="form-group">
               <label for="name" class="col-form-label">Name:</label>
-              <input type="text" class="form-control" id="name" name="name" value="<?= set_value('name'); ?>">
+              <input type="text" class="form-control" id="name" name="name" value="<?= set_value('name'); ?>" placeholder="ex : Rizky Tria Meditanala">
               <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
             </div>
             <div class="form-group">
               <label for="email" class="col-form-label">Email:</label>
-              <input type="email" class="form-control" id="email" name="email" value="<?= set_value('email'); ?>">
+              <input type="email" class="form-control" id="email" name="email" value="<?= set_value('email'); ?>" placeholder="ex : rizky_tm@gmail.com">
               <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
             </div>
             <div class="form-group">

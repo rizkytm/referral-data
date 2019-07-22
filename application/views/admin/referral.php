@@ -133,7 +133,7 @@
                         <td>
                           <?php foreach ($users as $user) {
                             if ($user->id == $row->referral_id)
-                              echo $row->referral_id . '. ' . $user->name;
+                              echo $user->name;
                           } ?>
                         </td>
                         <td><?= $row->date_created ?></td>
@@ -268,17 +268,17 @@
           <form class="user" method="post" action="<?= base_url('admin/addreferraldata'); ?>">
             <div class="form-group">
               <label for="name" class="col-form-label">Name:</label>
-              <input type="text" class="form-control" id="name" name="name" value="<?= set_value('name'); ?>">
+              <input type="text" class="form-control" id="name" name="name" value="<?= set_value('name'); ?>" placeholder="ex : Rizky Tria Meditanala">
               <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
             </div>
             <div class="form-group">
               <label for="no_hp" class="col-form-label">No HP:</label>
-              <input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= set_value('no_hp'); ?>">
+              <input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= set_value('no_hp'); ?>" placeholder="ex : 089123456789">
               <?= form_error('no_hp', '<small class="text-danger pl-3">', '</small>'); ?>
             </div>
             <div class="form-group">
               <label for="email" class="col-form-label">Email:</label>
-              <input type="email" class="form-control" id="email" name="email" value="<?= set_value('email'); ?>">
+              <input type="email" class="form-control" id="email" name="email" value="<?= set_value('email'); ?>" placeholder="ex : rizky_tm@gmail.com">
               <?= form_error('email', '<small class="text-danger pl-3">', '</small>'); ?>
             </div>
         </div>
