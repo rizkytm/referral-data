@@ -5,7 +5,7 @@ class UserModel extends CI_Model
     public function get()
     {
         $this->load->database();
-        $query = $this->db->query("select * from user where role_id='2'");
+        $query = $this->db->query("select * from user_account where role_id='2'");
         return $query->result();
     }
 
@@ -18,7 +18,7 @@ class UserModel extends CI_Model
 
     public function update($id, $name)
     {
-        $update = $this->db->query("UPDATE user SET name='$name' WHERE id='$id'");
+        $update = $this->db->query("UPDATE user_account SET name='$name' WHERE id='$id'");
         return $update;
     }
 
@@ -39,7 +39,7 @@ class UserModel extends CI_Model
     public function get_all()
     {
         $this->load->database();
-        $query = $this->db->query("SELECT * FROM user");
+        $query = $this->db->query("SELECT * FROM user_account");
         return $query->result();
     }
 }
