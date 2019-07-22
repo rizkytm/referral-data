@@ -14,7 +14,7 @@ class User extends CI_Controller
     public function index()
     {
         $data['title'] = 'Home';
-        $data['user'] = $this->db->get_where('user', ['email' =>
+        $data['user'] = $this->db->get_where('user_account', ['email' =>
         $this->session->userdata('email')])->row_array();
 
         $data['users'] = $this->UserModel->get_referral($data['user']['id']);
@@ -27,7 +27,7 @@ class User extends CI_Controller
     public function addreferraldata()
     {
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user_account.email]', [
             'is_unique' => "This email has already registered!"
         ]);
         $this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|numeric');
@@ -36,7 +36,7 @@ class User extends CI_Controller
             Failed to add new referral data</div>');
             redirect('user');
         } else {
-            $current_user['user'] = $this->db->get_where('user', ['email' =>
+            $current_user['user'] = $this->db->get_where('user_account', ['email' =>
             $this->session->userdata('email')])->row_array();
 
             $data = [

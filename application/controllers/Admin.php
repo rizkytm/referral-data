@@ -21,7 +21,7 @@ class Admin extends CI_Controller
             $data['title'] = 'Admin Home';
 
             // Mengambil data user yang login
-            $data['user'] = $this->db->get_where('user', ['email' =>
+            $data['user'] = $this->db->get_where('user_account', ['email' =>
             $this->session->userdata('email')])->row_array();
 
             // Query semua data dari tabel user
@@ -44,7 +44,7 @@ class Admin extends CI_Controller
         if ($this->session->userdata('role_id') === '1') {
             $data['title'] = 'Admin Home';
 
-            $data['user'] = $this->db->get_where('user', ['email' =>
+            $data['user'] = $this->db->get_where('user_account', ['email' =>
             $this->session->userdata('email')])->row_array();
 
             $data['referrals'] =  $this->ReferralModel->get();
@@ -66,7 +66,7 @@ class Admin extends CI_Controller
     {
         // Validasi aturan form
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user_account.email]', [
             'is_unique' => "This email has already registered!"
         ]);
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[3]|matches[password2]', [
@@ -92,7 +92,7 @@ class Admin extends CI_Controller
             ];
 
             // Memasukkan data ke tabel user
-            $this->db->insert('user', $data);
+            $this->db->insert('user_account', $data);
             // Mengirim Alert Sukses
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
             New user successfully created</div>');
@@ -144,7 +144,7 @@ class Admin extends CI_Controller
     public function addreferraldata()
     {
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.email]', [
+        $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user_account.email]', [
             'is_unique' => "This email has already registered!"
         ]);
         $this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|numeric');
@@ -155,7 +155,7 @@ class Admin extends CI_Controller
             redirect('admin/referral');
         } else {
             // Mengambil data user yang sedang login
-            $current_user['user'] = $this->db->get_where('user', ['email' =>
+            $current_user['user'] = $this->db->get_where('user_account', ['email' =>
             $this->session->userdata('email')])->row_array();
 
             $data = [
