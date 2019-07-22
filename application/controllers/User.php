@@ -32,7 +32,7 @@ class User extends CI_Controller
         ]);
         $this->form_validation->set_rules('no_hp', 'No HP', 'required|trim|numeric');
         if ($this->form_validation->run() == false) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
             Failed to add new referral data
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -52,7 +52,7 @@ class User extends CI_Controller
             ];
 
             $this->db->insert('referral_data', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             New referral data successfully created
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -72,7 +72,7 @@ class User extends CI_Controller
         $update = $this->ReferralModel->update($id, $name, $no_hp, $email);
 
         if ($update) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             Referral data successfully updated
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -80,7 +80,7 @@ class User extends CI_Controller
                 </div>');
             redirect('user');
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
             Failed to update referral data
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -95,7 +95,7 @@ class User extends CI_Controller
         $id = $this->input->post('id-delete');
         $delete = $this->ReferralModel->delete($id);
         if ($delete) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             Referral data successfully removed
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -103,7 +103,7 @@ class User extends CI_Controller
                 </div>');
             redirect('user');
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
             Failed to delete referral data
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
