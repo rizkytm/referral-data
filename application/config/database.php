@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'ec2-174-129-41-127.compute-1.amazonaws.com',
-	'username' => 'hyssizjoeomvix',
-	'password' => 'f8261ae38c5ff5ed585d1014d836fdc764c5aac592fb3477517d21e680b28119',
-	'database' => 'dcpr77qbrmnj1h',
-	'dbdriver' => 'postgre',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'ci_tutorial',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
@@ -92,6 +92,5 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE,
-	'port' => 5432
+	'save_queries' => TRUE
 );
